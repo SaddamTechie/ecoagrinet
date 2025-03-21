@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token); // Set true if token exists
+    setIsAuthenticated(!!token);
   }, []);
 
   return (
@@ -27,7 +27,7 @@ function App() {
               path="/"
               element={isAuthenticated ? <Dashboard /> : <Landing />}
             />
-            <Route path="/forum" element={<Forum />} />
+            <Route path="/forum" element={<Forum setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/login" element={ isAuthenticated? <Profile setIsAuthenticated={setIsAuthenticated} /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/register" element={ isAuthenticated? <Profile setIsAuthenticated={setIsAuthenticated} /> : <Register />} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Forum() {
+function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -18,11 +18,18 @@ function Forum() {
   }, []);
 
   const fetchPosts = async () => {
+    const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/forum');
+      const res = await axios.get('http://localhost:5000/api/forum', {
+        headers: { 'x-auth-token': token },
+      });
       setPosts(res.data);
     } catch (err) {
-      setError('Failed to fetch posts.');
+      if (err.response && err.response.status === 401) {
+        handleTokenExpiration();
+      } else {
+        setError('Failed to fetch posts.');
+      }
     }
   };
 
@@ -44,7 +51,11 @@ function Forum() {
       setContent('');
       fetchPosts();
     } catch (err) {
-      setError('Failed to save post. Please login or try again.');
+      if (err.response && err.response.status === 401) {
+        handleTokenExpiration();
+      } else {
+        setError('Failed to save post. Please login or try again.');
+      }
     }
   };
 
@@ -62,11 +73,15 @@ function Forum() {
       });
       fetchPosts();
     } catch (err) {
-      setError('Failed to delete post.');
+      if (err.response && err.response.status === 401) {
+        handleTokenExpiration();
+      } else {
+        setError('Failed to delete post.');
+      }
     }
   };
 
-  const handleLike = async (postId) => {
+  const handleLikePost = async (postId) => {
     if (!isAuthenticated) {
       setShowPopup(true);
       return;
@@ -78,7 +93,31 @@ function Forum() {
       });
       fetchPosts();
     } catch (err) {
-      setError('Failed to like post.');
+      if (err.response && err.response.status === 401) {
+        handleTokenExpiration();
+      } else {
+        setError('Failed to like post.');
+      }
+    }
+  };
+
+  const handleLikeComment = async (postId, commentId) => {
+    if (!isAuthenticated) {
+      setShowPopup(true);
+      return;
+    }
+    const token = localStorage.getItem('token');
+    try {
+      await axios.post(`http://localhost:5000/api/forum/${postId}/comment/${commentId}/like`, {}, {
+        headers: { 'x-auth-token': token },
+      });
+      fetchPosts();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        handleTokenExpiration();
+      } else {
+        setError('Failed to like comment.');
+      }
     }
   };
 
@@ -95,7 +134,11 @@ function Forum() {
       setComment('');
       fetchPosts();
     } catch (err) {
-      setError('Failed to add comment.');
+      if (err.response && err.response.status === 401) {
+        handleTokenExpiration();
+      } else {
+        setError('Failed to add comment.');
+      }
     }
   };
 
@@ -103,6 +146,14 @@ function Forum() {
     const url = `${window.location.origin}/forum?post=${postId}`;
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
+  };
+
+  const handleTokenExpiration = () => {
+    setError('Your session has expired. Please log in again.');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    setIsAuthenticated(false);
+    setTimeout(() => navigate('/login'), 2000); // Redirect after 2 seconds
   };
 
   return (
@@ -138,11 +189,11 @@ function Forum() {
             <p className="text-neutralBlack">{post.content}</p>
             <p className="text-sm text-gray-500">By {post.user.name} on {new Date(post.createdAt).toLocaleDateString()}</p>
             <div className="flex space-x-4 mt-2">
-              <button onClick={() => handleLike(post._id)} className="text-accent">
+              <button onClick={() => handleLikePost(post._id)} className="text-accent">
                 Like ({post.likes.length})
               </button>
               <button onClick={() => handleShare(post._id)} className="text-accent">Share</button>
-              {post.user._id === localStorage.getItem('userId') && ( // Assuming userId is stored on login
+              {post.user._id === localStorage.getItem('userId') && (
                 <>
                   <button onClick={() => handleEdit(post)} className="text-accent">Edit</button>
                   <button onClick={() => handleDelete(post._id)} className="text-red-500">Delete</button>
@@ -154,7 +205,12 @@ function Forum() {
               {post.comments.map(comment => (
                 <div key={comment._id} className="text-neutralBlack mt-2">
                   <p>{comment.content} - <span className="text-sm text-gray-500">by {comment.user.name}</span></p>
-                  <p className="text-sm">Likes: {comment.likes.length}</p>
+                  <button
+                    onClick={() => handleLikeComment(post._id, comment._id)}
+                    className="text-accent text-sm"
+                  >
+                    Like ({comment.likes.length})
+                  </button>
                 </div>
               ))}
               <textarea

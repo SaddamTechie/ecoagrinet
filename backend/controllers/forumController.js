@@ -82,6 +82,25 @@ const addComment = async (req, res) => {
   }
 };
 
+const likeComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ msg: 'Post not found' });
+    const comment = post.comments.id(req.params.commentId);
+    if (!comment) return res.status(404).json({ msg: 'Comment not found' });
+    if (comment.likes.includes(req.user.id)) {
+      comment.likes = comment.likes.filter(id => id.toString() !== req.user.id);
+    } else {
+      comment.likes.push(req.user.id);
+    }
+    await post.save();
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
 
 module.exports = {
     getPosts,
@@ -89,5 +108,6 @@ module.exports = {
     updatePost,
     deletePost,
     likePost,
-    addComment
+    addComment,
+    likeComment
 }

@@ -104,8 +104,12 @@ function Marketplace() {
             <p className="text-neutralBlack">{listing.description}</p>
             <p className="text-neutralBlack">Price: ${listing.price}</p>
             <p className="text-sm text-gray-500">By {listing.user.name} on {new Date(listing.createdAt).toLocaleDateString()}</p>
-            <button onClick={() => handleEdit(listing)} className="text-accent mr-4">Edit</button>
-            <button onClick={() => handleDelete(listing._id)} className="text-red-500">Delete</button>
+            {listing.user._id === localStorage.getItem('userId') && (
+                <>
+                  <button onClick={() => handleEdit(listing)} className="text-accent">Edit</button>
+                  <button onClick={() => handleDelete(listing._id)} className="text-red-500">Delete</button>
+                </>
+              )}
           </div>
         ))}
       </div>
