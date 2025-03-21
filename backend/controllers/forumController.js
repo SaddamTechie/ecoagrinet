@@ -2,7 +2,7 @@ const Post = require('../models/Post');
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate('user', 'name');
+    const posts = await Post.find().populate('user', 'name').populate('comments.user', 'name');
     res.json(posts);
   } catch (err) {
     console.error(err.message);
@@ -43,7 +43,7 @@ const deletePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ msg: 'Post not found' });
     if (post.user.toString() !== req.user.id) return res.status(403).json({ msg: 'Unauthorized' });
-    await post.remove();
+    await post.deleteOne();
     res.json({ msg: 'Post deleted' });
   } catch (err) {
     console.error(err.message);
@@ -51,5 +51,43 @@ const deletePost = async (req, res) => {
   }
 };
 
+const likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ msg: 'Post not found' });
+    if (post.likes.includes(req.user.id)) {
+      post.likes = post.likes.filter(id => id.toString() !== req.user.id);
+    } else {
+      post.likes.push(req.user.id);
+    }
+    await post.save();
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
 
-module.exports = { getPosts, createPost, updatePost, deletePost };
+const addComment = async (req, res) => {
+  const { content } = req.body;
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ msg: 'Post not found' });
+    post.comments.push({ user: req.user.id, content });
+    await post.save();
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+
+module.exports = {
+    getPosts,
+    createPost,
+    updatePost,
+    deletePost,
+    likePost,
+    addComment
+}

@@ -29,8 +29,8 @@ function App() {
             />
             <Route path="/forum" element={<Forum />} />
             <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={ isAuthenticated? <Profile setIsAuthenticated={setIsAuthenticated} /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/register" element={ isAuthenticated? <Profile setIsAuthenticated={setIsAuthenticated} /> : <Register />} />
             <Route
               path="/profile"
               element={isAuthenticated ? <Profile setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/login" />}
