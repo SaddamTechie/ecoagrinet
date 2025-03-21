@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
@@ -7,17 +8,19 @@ function Register() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('farmer');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', {
+      await axios.post('http://localhost:5000/api/auth/register', {
         name,
         email,
         password,
         role,
       });
       setMessage('Registration successful! Please login.');
+      navigate('/login'); // Redirect to Login
     } catch (err) {
       setMessage('Registration failed. Email may already be in use.');
     }
