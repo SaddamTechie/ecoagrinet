@@ -8,6 +8,7 @@ function Marketplace() {
   const [price, setPrice] = useState('');
   const [editId, setEditId] = useState(null);
   const [error, setError] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchListings();
@@ -15,7 +16,7 @@ function Marketplace() {
 
   const fetchListings = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/marketplace');
+      const res = await axios.get(`${API_URL}/marketplace`);
       setListings(res.data);
     } catch (err) {
       setError('Failed to fetch listings.');
@@ -27,12 +28,12 @@ function Marketplace() {
     const token = localStorage.getItem('token');
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/marketplace/${editId}`, { title, description, price }, {
+        await axios.put(`${API_URL}/marketplace/${editId}`, { title, description, price }, {
           headers: { 'x-auth-token': token },
         });
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/marketplace', { title, description, price }, {
+        await axios.post(`${API_URL}/marketplace`, { title, description, price }, {
           headers: { 'x-auth-token': token },
         });
       }
@@ -55,7 +56,7 @@ function Marketplace() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/marketplace/${id}`, {
+      await axios.delete(`${API_URL}/marketplace/${id}`, {
         headers: { 'x-auth-token': token },
       });
       fetchListings();

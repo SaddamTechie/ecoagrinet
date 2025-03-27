@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 function Profile({ setIsAuthenticated }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get('http://localhost:5000/api/auth/profile', {
+        const res = await axios.get(`${API_URL}/auth/profile`, {
           headers: { 'x-auth-token': token },
         });
         setUser(res.data);

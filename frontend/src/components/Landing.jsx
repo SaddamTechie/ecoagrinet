@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 function Landing() {
+  const API_URL = import.meta.env.VITE_API_URL;
+  console.log(API_URL)
   return (
     <div className="container mx-auto p-6 text-center">
       <h1 className="text-4xl font-bold text-neutralBlack mb-4">Welcome to EcoAgriNet</h1>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 function Dashboard() {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [location, setLocation] = useState('Nairobi');
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const counties = [
     "Mombasa", "Kwale", "Kilifi", "Tana River", "Lamu", "Taita Taveta",
@@ -28,7 +30,7 @@ function Dashboard() {
   const fetchData = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get(`http://localhost:5000/api/dashboard?location=${location}`, {
+      const res = await axios.get(`${API_URL}/dashboard?location=${location}`, {
         headers: { 'x-auth-token': token },
       });
       setData(res.data);

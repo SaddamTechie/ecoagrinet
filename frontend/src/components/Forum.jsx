@@ -12,6 +12,7 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const isAuthenticated = !!localStorage.getItem('token');
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchPosts();
@@ -20,7 +21,7 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
   const fetchPosts = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/forum', {
+      const res = await axios.get(`${API_URL}/forum`, {
         headers: { 'x-auth-token': token },
       });
       setPosts(res.data);
@@ -38,12 +39,12 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
     const token = localStorage.getItem('token');
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/forum/${editId}`, { title, content }, {
+        await axios.put(`${API_URL}/forum/${editId}`, { title, content }, {
           headers: { 'x-auth-token': token },
         });
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/forum', { title, content }, {
+        await axios.post(`${API_URL}/forum`, { title, content }, {
           headers: { 'x-auth-token': token },
         });
       }
@@ -68,7 +69,7 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/forum/${id}`, {
+      await axios.delete(`${API_URL}/forum/${id}`, {
         headers: { 'x-auth-token': token },
       });
       fetchPosts();
@@ -88,7 +89,7 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
     }
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`http://localhost:5000/api/forum/${postId}/like`, {}, {
+      await axios.post(`${API_URL}/forum/${postId}/like`, {}, {
         headers: { 'x-auth-token': token },
       });
       fetchPosts();
@@ -108,7 +109,7 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
     }
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`http://localhost:5000/api/forum/${postId}/comment/${commentId}/like`, {}, {
+      await axios.post(`${API_URL}/forum/${postId}/comment/${commentId}/like`, {}, {
         headers: { 'x-auth-token': token },
       });
       fetchPosts();
@@ -128,7 +129,7 @@ function Forum({ setIsAuthenticated }) { // Added setIsAuthenticated prop
     }
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`http://localhost:5000/api/forum/${postId}/comment`, { content: comment }, {
+      await axios.post(`${API_URL}/forum/${postId}/comment`, { content: comment }, {
         headers: { 'x-auth-token': token },
       });
       setComment('');
