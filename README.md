@@ -6,6 +6,8 @@
 
 **EcoAgriNet** is a full-stack web application empowering smallholder farmers with real-time data, community support, and a direct marketplace to enhance sustainability and profitability. Built as a capstone project, it aligns with UN Sustainable Development Goals (SDG 2: Zero Hunger, SDG 13: Climate Action) by leveraging modern technologies like React, Node.js, MongoDB, and FastAPI-powered AI.
 
+[Pitch Deck](https://docs.google.com/presentation/d/1w239WsvWlp7TPVGegHD9jwU7jWzd9abE3K7Pp7PN-zU/edit?usp=sharing)
+
 ---
 
 ## Table of Contents

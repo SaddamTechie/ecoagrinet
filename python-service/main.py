@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import joblib
 import numpy as np
+import pandas as pd
 from pathlib import Path
 
 app = FastAPI(
@@ -34,8 +35,11 @@ async def predict_crop(input_data: CropInput):
         JSON with the predicted crop
     """
     try:
-        # Prepare input data
-        data = np.array([[input_data.temp, input_data.rainfall, input_data.soil_ph]])
+        # Prepare input data as a DataFrame with feature names
+        data = pd.DataFrame(
+            [[input_data.temp, input_data.rainfall, input_data.soil_ph]],
+            columns=['temp', 'rainfall', 'soil_ph']
+        )
         
         # Make prediction
         prediction = model.predict(data)
