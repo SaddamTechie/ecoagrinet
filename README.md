@@ -1,14 +1,14 @@
 # EcoAgriNet
 
-Live Project Link : https://ecoagrinet.vercel.app/
+Live Project : https://ecoagrinet.vercel.app/
+
+[Pitch Deck](https://docs.google.com/presentation/d/1w239WsvWlp7TPVGegHD9jwU7jWzd9abE3K7Pp7PN-zU/edit?usp=sharing)
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://ecoagrinet.vercel.app/)
 
-### [![Home Screenshot](./screenshots/hero.png)](https://ecoagrinet.vercel.app/)
+### [![Home Screenshot](https://drive.usercontent.google.com/download?id=1hqqXKy_RlTWA2g35Hl7SPhW4Zj3eYNjZ)](https://ecoagrinet.vercel.app/)
 
 **EcoAgriNet** is a full-stack web application empowering smallholder farmers with real-time data, community support, and a direct marketplace to enhance sustainability and profitability. Built as a capstone project, it aligns with UN Sustainable Development Goals (SDG 2: Zero Hunger, SDG 13: Climate Action) by leveraging modern technologies like React, Node.js, MongoDB, and FastAPI-powered AI.
-
-[Pitch Deck](https://docs.google.com/presentation/d/1w239WsvWlp7TPVGegHD9jwU7jWzd9abE3K7Pp7PN-zU/edit?usp=sharing)
 
 ---
 
