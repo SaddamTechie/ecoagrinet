@@ -1,5 +1,6 @@
 const axios = require('axios');
 
+
 const getDashboardData = async (req, res) => {
   const { location = 'Nairobi' } = req.query; // Default to Nairobi if no location is provided
   try {
@@ -71,7 +72,7 @@ const getDashboardData = async (req, res) => {
     const soil_ph = await getSoilPH(lat, lon) || 6.5;
 
     // Step 3: Fetch crop recommendation from Python service
-    const cropRes = await axios.post('http://localhost:5001/predict_crop', {
+    const cropRes = await axios.post(`${process.env.PYTHON_SERVICE_API_URL}/predict_crop`, {
       temp,
       rainfall,
       soil_ph,
