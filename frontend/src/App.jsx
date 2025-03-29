@@ -10,6 +10,9 @@ import Landing from './components/Landing';
 import Profile from './components/Profile';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import FarmerDashboard from './components/FarmerDashboard';
+import { Toaster } from 'sonner'
+import CropPredictionAPI from './components/CropPredictionAPI';
+
 
 function App() {
   return (
@@ -17,11 +20,13 @@ function App() {
       <Router>
         <div className="min-h-screen bg-neutralWhite flex flex-col">
           <Navbar />
+          <Toaster/>
           <main className="flex-grow">
             <Routes>
               {/* Conditional rendering for "/" */}
               <Route path="/" element={<ConditionalRoute />} />
               <Route path="/forum" element={<Forum />} />
+              <Route path="/api-docs" element={<CropPredictionAPI />} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

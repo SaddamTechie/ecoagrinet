@@ -16,7 +16,7 @@ function Landing() {
     <div className="bg-neutralWhite min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-secondary text-neutralWhite py-12 sm:py-16 md:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.h1
             variants={fadeIn}
             initial="hidden"
@@ -53,7 +53,7 @@ function Landing() {
             </Link>
           </motion.div>
         </div>
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
           <img
             src="https://media.istockphoto.com/id/1405168648/photo/farmer-with-a-digital-tablet-examining-the-development-of-sunflower-crops-in-his-field.jpg?s=2048x2048&w=is&k=20&c=1ASgD9VgLqIw1PTkmxEbQCqNm8QyazhodLegAg2o-VM="
             alt="Farmer in field with tablet"

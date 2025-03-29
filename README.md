@@ -8,7 +8,7 @@ Live Project : https://ecoagrinet.vercel.app/
 
 ### [![Home Screenshot](https://drive.usercontent.google.com/download?id=1hqqXKy_RlTWA2g35Hl7SPhW4Zj3eYNjZ)](https://ecoagrinet.vercel.app/)
 
-**EcoAgriNet** is a full-stack web application empowering smallholder farmers with real-time data, community support, and a direct marketplace to enhance sustainability and profitability. Built as a capstone project, it aligns with UN Sustainable Development Goals (SDG 2: Zero Hunger, SDG 13: Climate Action) by leveraging modern technologies like React, Node.js, MongoDB, and FastAPI-powered AI.
+**EcoAgriNet** is a full-stack web application empowering smallholder farmers with real-time data, community support, and a direct marketplace to enhance sustainability and profitability. It aligns with UN Sustainable Development Goals (SDG 2: Zero Hunger, SDG 13: Climate Action) by leveraging modern technologies like React, Node.js, MongoDB, and FastAPI-powered AI.
 
 ---
 
@@ -237,6 +237,47 @@ Runs on http://localhost:5000.
 
 ---
 
+### Crop Prediction API
+
+EcoAgriNet offers a free, AI-driven Crop Prediction API to help farmers and developers predict the best crops based on environmental factors. This API is powered by machine learning and is available for public use or self-hosting.
+
+### Endpoint
+
+- **URL**: `POST /predict-crop`
+- **Description**: Predicts the optimal crop based on input parameters.
+
+### Request Parameters
+
+- `temp` (float): Average temperature in °C
+- `rainfall` (float): Annual rainfall in mm
+- `soil_ph` (float): Soil pH level (0-14)
+
+**Example Request:**
+
+```json
+{
+  "temperature": 25.5,
+  "rainfall": 1200,
+  "soil_ph": 6.5
+}
+```
+
+Response
+Returns a JSON object with the predicted crop and confidence score.
+
+Example Response:
+
+```json
+{
+  "predicted_crop": "Maize",
+  "confidence": 0.92
+}
+```
+
+Try It Out
+Swagger UI: Test the API interactively at [API](https://ecoagrinet-python.onrender.com/docs).
+Source Code: Want to host it yourself? Check out the repository on [GitHub](https://github.com/SaddamTechie/ecoagrinet/tree/main/python-service)
+
 ### Architecture
 
 - Frontend: React with Tailwind CSS, communicates with backend via Axios.
@@ -246,7 +287,9 @@ Runs on http://localhost:5000.
 Data Flow:
 
 ```
- User inputs location → Backend fetches weather → Python predicts crop → Frontend displays.
+
+User inputs location → Backend fetches weather → Python predicts crop → Frontend displays.
+
 ```
 
 ---
@@ -273,3 +316,7 @@ Data Flow:
 - OpenWeatherMap: Weather data API.
 - FastAPI & Scikit-Learn: Enabling AI integration.
 - Inspiration: Smallholder farmers and sustainability goals.
+
+```
+
+```

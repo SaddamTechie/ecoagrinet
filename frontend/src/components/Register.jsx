@@ -15,6 +15,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setMessage(''); // Clear previous messages
     try {
       await axios.post(`${API_URL}/auth/register`, {
         name,
@@ -23,9 +24,22 @@ function Register() {
         role,
       });
       setMessage('Registration successful! Redirecting to login...');
-      setTimeout(() => navigate('/login'), 2000); // Redirect after 2 seconds
+      setTimeout(() => navigate('/login'), 1000); // Redirect after 1 second
     } catch (err) {
-      setMessage('Registration failed. Email may already be in use.');
+      if (err.response) {
+        // Backend responded with an error (e.g., 400 for duplicate email)
+        if (err.response.status === 400) {
+          setMessage('Email is already in use. Please use a different email.');
+        } else {
+          setMessage('Registration failed. Please try again.');
+        }
+      } else if (err.request) {
+        // No response from server (e.g., backend offline)
+        setMessage('Unable to connect to the server. Please try again later.');
+      } else {
+        // Other errors (e.g., network issues)
+        setMessage('Something went wrong. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }
