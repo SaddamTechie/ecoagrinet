@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-function Login({ setIsAuthenticated }) {
+
+function Login() {
+  const { login } = useAuth(); // Use login function from AuthContext
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -13,9 +16,8 @@ function Login({ setIsAuthenticated }) {
     e.preventDefault();
     try {
       const res = await axios.post(`${API_URL}/auth/login`, { email, password });
-      localStorage.setItem('token', res.data.token);
+      login(res.data.token); 
       localStorage.setItem('userId', res.data.userId); // Store userId
-      setIsAuthenticated(true);
       setMessage('Login successful!');
       navigate('/');
     } catch (err) {

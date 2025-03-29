@@ -10,10 +10,20 @@ const getListings = async (req, res) => {
   }
 };
 
-const createListing = async (req, res) => {
-  const { title, description, price } = req.body;
+const getMyListings = async (req, res) => { 
   try {
-    const listing = new Listing({ user: req.user.id, title, description, price });
+    const listings = await Listing.find({ user: req.user.id });
+    res.json(listings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+const createListing = async (req, res) => {
+  const { title, description,image,price } = req.body;
+  try {
+    const listing = new Listing({ user: req.user.id, title, description,image,price });
     await listing.save();
     res.json(listing);
   } catch (err) {
@@ -23,13 +33,14 @@ const createListing = async (req, res) => {
 };
 
 const updateListing = async (req, res) => {
-  const { title, description, price } = req.body;
+  const { title, description,image,price } = req.body;
   try {
     let listing = await Listing.findById(req.params.id);
     if (!listing) return res.status(404).json({ msg: 'Listing not found' });
     if (listing.user.toString() !== req.user.id) return res.status(403).json({ msg: 'Unauthorized' });
     listing.title = title || listing.title;
     listing.description = description || listing.description;
+    listing.image = image || listing.image;
     listing.price = price || listing.price;
     await listing.save();
     res.json(listing);
@@ -53,4 +64,4 @@ const deleteListing = async (req, res) => {
 };
 
 
-module.exports = { getListings,createListing,updateListing,deleteListing}
+module.exports = { getListings,getMyListings,createListing,updateListing,deleteListing}

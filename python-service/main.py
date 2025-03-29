@@ -43,7 +43,7 @@ async def predict_crop(input_data: CropInput):
         
         # Make prediction
         prediction = model.predict(data)
-        
+        print(prediction)
         return {"crop": prediction[0]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
