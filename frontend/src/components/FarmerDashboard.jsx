@@ -35,12 +35,12 @@ function FarmerDashboard() {
     e.preventDefault();
     try {
       if (editId) {
-        await axios.put(`${API_URL}/marketplace/${editId}`, { title, description,image, price }, {
+        await axios.put(`${API_URL}/marketplace/${editId}`, { title, description, image, price }, {
           headers: { 'x-auth-token': token },
         });
         setEditId(null);
       } else {
-        await axios.post(`${API_URL}/marketplace`, { title, description,image, price }, {
+        await axios.post(`${API_URL}/marketplace`, { title, description, image, price }, {
           headers: { 'x-auth-token': token },
         });
       }
@@ -85,69 +85,93 @@ function FarmerDashboard() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold text-neutralBlack mb-6">Farmer Dashboard</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <div className="flex justify-end mb-4">
-        <button onClick={handleAddClick} className="bg-primary text-neutralWhite p-2 rounded hover:bg-accent">Add Listing</button>
-      </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <form onSubmit={handleSubmit} className="bg-neutralWhite p-4 rounded-lg shadow-md w-full max-w-md">
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Listing Title"
-            className="w-full p-2 mb-4 border rounded"
-            required
-          />
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
-            className="w-full p-2 mb-4 border rounded"
-            required
-          />
-          <input
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="Image URL"
-            className="w-full p-2 mb-4 border rounded"
-            required
-          />
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Price ($)"
-            className="w-full p-2 mb-4 border rounded"
-            step="0.01"
-            required
-          />
-          <button type="submit" className="bg-primary text-neutralWhite p-2 rounded hover:bg-accent">
-            {editId ? 'Update Listing' : 'Create Listing'}
+    <div className="min-h-screen bg-neutralWhite py-6">
+      <div className="container mx-auto px-4">
+        <h1 className="text-2xl font-bold text-neutralBlack mb-6 sm:text-3xl">Farmer Dashboard</h1>
+        {error && <p className="text-red-500 mb-4 text-sm sm:text-base">{error}</p>}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleAddClick}
+            className="bg-primary text-neutralWhite px-4 py-2 rounded hover:bg-accent text-sm sm:text-base sm:px-6"
+          >
+            Add Listing
           </button>
-        </form>
-      </Modal>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {listings.map(listing => (
-          <div key={listing._id} className="bg-neutralWhite p-4 rounded-lg shadow-md">
-            <img src={listing.image} alt={listing.title} className="w-full h-48 object-cover mb-4" />
-            <h2 className="text-xl font-semibold text-secondary">{listing.title}</h2>
-            <p className="text-neutralBlack">{listing.description}</p>
-            <p className="text-neutralBlack">Price: ${listing.price}</p>
-            <div className="flex space-x-4">
-              <button onClick={() => handleEdit(listing)} className="text-accent">Edit</button>
-              <button onClick={() => handleDelete(listing._id)} className="text-red-500">Delete</button>
+        </div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          className="modal w-full max-w-sm mx-4 sm:max-w-md"
+          overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
+          <form onSubmit={handleSubmit} className="bg-neutralWhite p-4 rounded-lg shadow-md">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Listing Title"
+              className="w-full p-2 mb-4 border rounded text-sm sm:text-base"
+              required
+            />
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Description"
+              className="w-full p-2 mb-4 border rounded text-sm sm:text-base"
+              required
+            />
+            <input
+              type="text"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              placeholder="Image URL"
+              className="w-full p-2 mb-4 border rounded text-sm sm:text-base"
+              required
+            />
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Price ($)"
+              className="w-full p-2 mb-4 border rounded text-sm sm:text-base"
+              step="0.01"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full bg-primary text-neutralWhite p-2 rounded hover:bg-accent text-sm sm:text-base sm:p-3"
+            >
+              {editId ? 'Update Listing' : 'Create Listing'}
+            </button>
+          </form>
+        </Modal>
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {listings.map(listing => (
+            <div key={listing._id} className="bg-neutralWhite p-4 rounded-lg shadow-md">
+              <img
+                src={listing.image}
+                alt={listing.title}
+                className="w-full h-32 sm:h-48 object-cover mb-4 rounded"
+              />
+              <h2 className="text-lg font-semibold text-secondary mb-2 sm:text-xl">{listing.title}</h2>
+              <p className="text-neutralBlack text-sm sm:text-base">{listing.description}</p>
+              <p className="text-neutralBlack text-sm sm:text-base">Price: ${listing.price}</p>
+              <div className="flex space-x-4 mt-4">
+                <button
+                  onClick={() => handleEdit(listing)}
+                  className="text-accent text-sm sm:text-base hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(listing._id)}
+                  className="text-red-500 text-sm sm:text-base hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
