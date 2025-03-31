@@ -52,8 +52,11 @@ function ProductDetails() {
       return;
     }
 
-    // Pre-filled message with product name and image
-    const message = `Hello! I'm interested in your product: *${product.title}*. Here's the image: ${product.image}. Can you tell me more about it?`;
+    // Construct the product page URL
+    const productUrl = `${window.location.origin}/marketplace/${id}`;
+
+    // Pre-filled message with product name and product page URL
+    const message = `Hello! I'm interested in your product: *${product.title}*. Here's the link: ${productUrl}. Can you tell me more about it?`;
     const encodedMessage = encodeURIComponent(message);
 
     // WhatsApp URL
@@ -120,7 +123,7 @@ function ProductDetails() {
             <div className="space-y-4">
               <p className="flex items-center gap-2 text-gray-800 text-base sm:text-lg">
                 <FaDollarSign className="w-5 h-5 text-primary" />
-                <span className="font-medium">Price:</span> Ksh{parseFloat(product.price).toFixed(2)}
+                <span className="font-medium">Price:</span> ${parseFloat(product.price).toFixed(2)}
               </p>
               <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
                 <FaUser className="w-5 h-5 text-primary" />
@@ -135,7 +138,7 @@ function ProductDetails() {
               onClick={() => handleContactSeller(product.user.phone)}
               className="mt-6 bg-primary text-white px-6 py-3 rounded-full flex items-center gap-2 text-sm sm:text-base hover:bg-accent transition duration-300 w-full sm:w-auto justify-center"
             >
-              <FaWhatsapp className="w-5 h-5" /> Buy via Whatsapp
+              <FaWhatsapp className="w-5 h-5" /> Buy via WhatsApp
             </button>
           </div>
         ) : null}

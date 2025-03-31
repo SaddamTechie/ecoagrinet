@@ -58,10 +58,13 @@ It provides a **Dashboard** for data-driven decisions, a **Forum** for community
 - **Marketplace**:
   - Full CRUD for listings, restricted to owners.
   - Buyer-farmer direct connections.
+  - Buy via Whatsapp
 - **Authentication**:
   - JWT-based login/register with role support (farmer/buyer).
   - Token expiration handling with auto-logout and notification.
 - **Profile**: User details and logout functionality.
+- **API**:
+  - Free API calls to predict best crop.
 
 ---
 
@@ -215,7 +218,7 @@ Runs on http://localhost:5000.
 
 ---
 
-### Usage
+## Usage
 
 1. Start All Services:
 
@@ -237,7 +240,7 @@ Runs on http://localhost:5000.
 
 ---
 
-### Crop Prediction API
+## Crop Prediction API
 
 EcoAgriNet offers a free, AI-driven Crop Prediction API to help farmers and developers predict the best crops based on environmental factors. This API is powered by machine learning and is available for public use or self-hosting.
 

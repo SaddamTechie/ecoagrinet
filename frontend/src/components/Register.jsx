@@ -91,6 +91,7 @@ function Register() {
                 type="phone"
                 id="phone"
                 value={phone}
+                placeholder='e.g. 0723456789'  
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full p-2 border rounded text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary"
                 required

@@ -60,6 +60,13 @@ function Profile() {
                 >
                   Retry
                 </button>
+                <br />
+                <button
+                  onClick={() => handleLogout()}
+                  className="mt-4 bg-primary text-neutralWhite px-4 py-2 rounded-full text-sm font-semibold hover:bg-accent transition duration-300 sm:text-base sm:px-6"
+                >
+                  Clear token and refresh
+                </button>
               </div>
             </div>
           ) : user ? (
