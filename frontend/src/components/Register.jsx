@@ -6,6 +6,7 @@ function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [role, setRole] = useState('farmer');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +22,7 @@ function Register() {
         name,
         email,
         password,
+        phone,
         role,
       });
       setMessage('Registration successful! Redirecting to login...');
@@ -76,6 +78,20 @@ function Register() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 border rounded text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <label className="block text-neutralBlack mb-2 text-sm sm:text-base" htmlFor="phone">
+                Phone
+              </label>
+              <input
+                type="phone"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full p-2 border rounded text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary"
                 required
                 disabled={isLoading}

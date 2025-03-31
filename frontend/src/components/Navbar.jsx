@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FaHome, FaComments, FaStore, FaUser, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaLeaf } from 'react-icons/fa';
+import { FaHome, FaComments, FaStore, FaUser, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaLeaf, FaBuysellads, FaSellcast } from 'react-icons/fa';
 
 function Navbar() {
   const { token, logout } = useAuth();
@@ -61,6 +61,9 @@ function Navbar() {
           </Link>
           <Link to="/api-docs" className="flex items-center gap-2 text-sm sm:text-base hover:text-accent transition duration-200">
             <FaLeaf className="w-4 h-4 sm:w-5 sm:h-5" /> API Docs
+          </Link>
+          <Link to="/dashboard" className="flex items-center bg-amber-300 px-4 py-2 rounded-md gap-2 text-sm sm:text-base hover:text-accent transition duration-200">
+            Sell
           </Link>
 
           {/* Conditional Links Based on Authentication */}

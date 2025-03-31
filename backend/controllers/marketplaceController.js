@@ -10,10 +10,26 @@ const getListings = async (req, res) => {
   }
 };
 
+
+
+
 const getMyListings = async (req, res) => { 
   try {
     const listings = await Listing.find({ user: req.user.id });
     res.json(listings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+
+
+const getListingById = async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id).populate('user', 'name phone');
+    if (!listing) return res.status(404).json({ msg: 'Listing not found' });
+    res.json(listing);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -64,4 +80,4 @@ const deleteListing = async (req, res) => {
 };
 
 
-module.exports = { getListings,getMyListings,createListing,updateListing,deleteListing}
+module.exports = { getListings,getListingById,getMyListings,createListing,updateListing,deleteListing}

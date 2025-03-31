@@ -79,6 +79,10 @@ function Profile() {
                   <span className="text-sm text-gray-700 sm:text-base">{user.email}</span>
                 </div>
                 <div className="flex items-center justify-between border-b pb-2">
+                  <span className="text-sm font-medium text-neutralBlack sm:text-base">Phone:</span>
+                  <span className="text-sm text-gray-700 sm:text-base">{user.phone}</span>
+                </div>
+                <div className="flex items-center justify-between border-b pb-2">
                   <span className="text-sm font-medium text-neutralBlack sm:text-base">Joined:</span>
                   <span className="text-sm text-gray-700 sm:text-base">
                     {new Date(user.createdAt).toLocaleDateString()}

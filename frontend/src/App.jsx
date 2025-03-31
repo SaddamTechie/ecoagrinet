@@ -12,6 +12,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import FarmerDashboard from './components/FarmerDashboard';
 import { Toaster } from 'sonner'
 import CropPredictionAPI from './components/CropPredictionAPI';
+import NotFound from './components/NotFound';
+import ProductDetails from './components/ProductDetails';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -28,6 +31,7 @@ function App() {
               <Route path="/forum" element={<Forum />} />
               <Route path="/api-docs" element={<CropPredictionAPI />} />
               <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/marketplace/:id" element={<ProductDetails />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route
@@ -38,11 +42,10 @@ function App() {
                 path="/dashboard"
                 element={<ProtectedRoute component={FarmerDashboard} />}
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
-          <footer className="bg-secondary text-neutralWhite p-4 text-center">
-            &copy; 2025 EcoAgriNet. All rights reserved.
-          </footer>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
