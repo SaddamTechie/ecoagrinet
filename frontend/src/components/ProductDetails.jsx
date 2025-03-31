@@ -123,7 +123,7 @@ function ProductDetails() {
             <div className="space-y-4">
               <p className="flex items-center gap-2 text-gray-800 text-base sm:text-lg">
                 <FaDollarSign className="w-5 h-5 text-primary" />
-                <span className="font-medium">Price:</span> ${parseFloat(product.price).toFixed(2)}
+                <span className="font-medium">Price:</span> Ksh{parseFloat(product.price).toFixed(2)}
               </p>
               <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
                 <FaUser className="w-5 h-5 text-primary" />
